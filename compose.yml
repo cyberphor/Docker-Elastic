@@ -1,8 +1,12 @@
-elk:
-  image: sebp/elk
-  ports:
-    - "5601:5601"
-    - "9200:9200"
-    - "5044:5044"
-  volumes:
-    - '/logstash/01-input-http.conf:/etc/logstash/conf.d/01-input-http.conf'
+version: "3"
+
+services:
+  demo:
+    image: sebp/elk
+    ports:
+      - 9200:9200 # elasticsearch
+      - 5044:5044 # logstash/beats
+      - 1337:1337 # logstash/http: spiritbox logs
+      - 5601:5601 # kibana
+    volumes:
+    - './spiritbox.conf:/etc/logstash/conf.d/spiritbox.conf'
