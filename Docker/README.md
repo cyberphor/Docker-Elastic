@@ -3,7 +3,7 @@
 ### Usage
 ```
 git clone https://github.com/cyberphor/elastic-bootstraps
-cd Docker/
+cd elastic-bootstraps/Docker
 docker-compose up
 ```
 
