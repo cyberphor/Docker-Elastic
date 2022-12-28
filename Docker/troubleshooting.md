@@ -4,17 +4,11 @@ This file documents some of the issues I have encountered and resolved while dep
 ### Max Memory is Too Low
 > max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
 
-If you are getting the error above, perform the edit below. Repeat this process as needed or automate it using PowerShell.
+If you are getting the error above, invoke the Windows Subsystem for Linux (WSL), append `vm.max_map_count = 262144` to `/etc/sysctl.conf` and reload the WSL's kernel parameters. Repeat this process as needed or automate it using PowerShell.
 ```bash
-# step 1: invoke the Windows Subsystem for Linux (WSL)
-wsl.exe 
+wsl "echo" "vm.max_map_count = 262144" ">>" "/etc/sysctl.conf"
+wsl "sysctl" "-p"
 
-# step 2: append the following parameter to the file specified
-echo "vm.max_map_count = 262144" >> /etc/sysctl.conf
-
-# step 3: reload kernel parameters and exit
-sysctl -p
-exit
 ```
 
 The hack above is necessary when the WSL is used to run containers. By default, WSL-based containers are limited in the amount of memory they are allowed to use.  
