@@ -1,5 +1,5 @@
 ## Troubleshooting
-This file documents some of the issues I have encountered and resolved for deploying an Elastic stack using Docker.
+This file documents some of the issues I have encountered and resolved while deploying a Docker-based Elastic stack.
 
 ### Max Memory is Too Low
 > max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
