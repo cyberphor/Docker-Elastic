@@ -3,8 +3,8 @@ My bootstraps for deploying an Elastic stack via Docker.
 
 ### Usage
 ```
-git clone https://github.com/cyberphor/elastic-bootstraps
-cd elastic-bootstraps
+git clone https://github.com/cyberphor/elastic-docker-bootstraps
+cd elastic-docker-bootstraps
 docker-compose up
 ```
 
