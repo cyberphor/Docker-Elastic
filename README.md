@@ -23,13 +23,22 @@ bash Set-VirtualMemorySize.sh
 >  ECS compatibility is enabled but `target` option was not specified. This may cause fields to be set at the top-level of the event where they are likely to clash with the Elastic Common Schema. 
 
 ```bash
-# fix goes here
+input {
+  http {
+    port => 1337
+    additional_codecs => {} # <-- i added this line
+    codec => json {
+      target => "[document]"
+    }
+  }
+}
 ```
 
 ## References
 * [https://hub.docker.com/r/sebp/elk/](https://hub.docker.com/r/sebp/elk/)
 * [https://elk-docker.readthedocs.io/](https://elk-docker.readthedocs.io/)
 * [https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target](https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target)
+* [https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4](https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4)
 
 
 ### Copyright
