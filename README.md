@@ -22,6 +22,8 @@ bash Set-VirtualMemorySize.sh
 **"Target" Option Was Not Specified**  
 >  ECS compatibility is enabled but `target` option was not specified. This may cause fields to be set at the top-level of the event where they are likely to clash with the Elastic Common Schema. 
 
+NOTE: I've since removed the fix below and only specify the port for Logstash to listen on. 
+
 ```bash
 input {
   http {
@@ -33,6 +35,8 @@ input {
   }
 }
 ```
+
+
 
 ## References
 * [https://hub.docker.com/r/sebp/elk/](https://hub.docker.com/r/sebp/elk/)
