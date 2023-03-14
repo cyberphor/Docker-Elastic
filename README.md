@@ -1,10 +1,10 @@
-## Elastic Docker Bootstraps
-My bootstraps for deploying an Elastic stack via Docker.
+## Elastic Bootstraps
+My bootstraps for deploying an Elastic stack.
 
-### Usage
+### Using Docker
 ```
-git clone https://github.com/cyberphor/elastic-docker-bootstraps
-cd elastic-docker-bootstraps
+git clone https://github.com/cyberphor/elastic-bootstraps
+cd elastic-bootstraps
 docker-compose up
 ```
 
