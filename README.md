@@ -28,14 +28,12 @@ input {
 }
 ```
 
-
-
 ## References
+* [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 * [https://hub.docker.com/r/sebp/elk/](https://hub.docker.com/r/sebp/elk/)
 * [https://elk-docker.readthedocs.io/](https://elk-docker.readthedocs.io/)
 * [https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target](https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target)
 * [https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4](https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4)
-
 
 ### Copyright
 This project is licensed under the terms of the [MIT license](/LICENSE).

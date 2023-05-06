@@ -1,22 +1,50 @@
 services:
+  certificates:
+    build: certificates
+    image: certificates:latest
+    container_name: certificates
+    volumes:
+      - certificates:/usr/share/elasticsearch/config/certs
+    networks: 
+      - elastic
+    user: "root"
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/elasticsearch/elasticsearch.crt ]"]
+      interval: 1s
+      timeout: 5s
+      retries: 120  
+
   elasticsearch:
+    depends_on:
+      certificates:
+        condition: service_healthy
     build: elasticsearch
     image: elasticsearch:latest
     container_name: elasticsearch
-    environment:
-      - ELASTIC_PASSWORD=elastic
+    env_file:
+      - .env
+    volumes:
+      - certificates:/usr/share/elasticsearch/config/certs
     ports:
     - 9200:9200 
     networks: 
     - elastic
-  elastalert:
-    depends_on:
-      - elasticsearch
-    build: elastalert
-    image: elastalert:latest
-    container_name: elastalert
-    networks:
-    - elastic
+  
+#  elastalert:
+#    depends_on:
+#      - elasticsearch
+#    build: elastalert
+#    image: elastalert:latest
+#    container_name: elastalert
+#    volumes:
+#      - certificates:/opt/elastalert/certificates:ro
+#    networks:
+#    - elastic
+
+volumes:
+  certificates:
+    name: certificates
+    driver: local
 
 networks:
   elastic:
