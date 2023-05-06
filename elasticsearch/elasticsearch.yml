@@ -1,0 +1,3 @@
+cluster.name: cluster01
+node.name: node01
+network.host: 0.0.0.0

@@ -1,9 +1,23 @@
 services:
-  elastic:
-    container_name: elastic
+  elasticsearch:
+    build: elasticsearch
+    image: elasticsearch:latest
+    container_name: elasticsearch
+    environment:
+      - ELASTIC_PASSWORD=elastic
     ports:
-      - 9200:9200 # elasticsearch
+    - 9200:9200 
+    networks: 
+    - elastic
+  elastalert:
+    depends_on:
+      - elasticsearch
+    build: elastalert
+    image: elastalert:latest
+    container_name: elastalert
+    networks:
+    - elastic
 
 networks:
   elastic:
-  name: elastic
+    name: elastic
