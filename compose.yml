@@ -1,13 +1,9 @@
-version: "3"
-
 services:
   elastic:
     container_name: elastic
-    image: sebp/elk
     ports:
-      - 1337:1337 # logstash (JSON objects generated via Spiritbox and shipped via HTTP)
-      - 5044:5044 # logstash (logs shipped via Beats)
-      - 5601:5601 # kibana
       - 9200:9200 # elasticsearch
-    volumes:
-      - './spiritbox.conf:/etc/logstash/conf.d/spiritbox.conf'
+
+networks:
+  elastic:
+  name: elastic
