@@ -1,12 +1,4 @@
-## Elastic Bootstraps
-My bootstraps for deploying an Elastic stack.
-
-### Using Docker
-```
-git clone https://github.com/cyberphor/elastic-bootstraps
-cd elastic-bootstraps
-docker-compose up
-```
+## Docker Elastic
 
 ### Troubleshooting
 This file documents some of the issues I have encountered and resolved while deploying a Docker-based Elastic stack.
