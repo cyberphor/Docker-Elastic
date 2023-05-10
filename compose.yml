@@ -30,16 +30,16 @@ services:
     networks: 
     - elastic
   
-#  elastalert:
-#    depends_on:
-#      - elasticsearch
-#    build: elastalert
-#    image: elastalert:latest
-#    container_name: elastalert
-#    volumes:
-#      - certificates:/opt/elastalert/certificates:ro
-#    networks:
-#    - elastic
+  elastalert:
+    depends_on:
+      - elasticsearch
+    build: elastalert
+    image: elastalert:latest
+    container_name: elastalert
+    volumes:
+      - certificates:/opt/elastalert/certificates:ro
+    networks:
+    - elastic
 
 volumes:
   certificates:
