@@ -1,4 +1,4 @@
 cluster.name: cluster01
+cluster.initial_master_nodes: node01
 node.name: node01
 network.host: 0.0.0.0
-cluster.initial_master_nodes: node01
