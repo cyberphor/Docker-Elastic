@@ -28,19 +28,19 @@ else
   echo "[+] X.509 certificates for Elasticsearch already exist."
 fi
 
-echo "Setting file permissions"
+echo "[*] Setting file permissions"
 chown -R root:root config/certs
 find . -type d -exec chmod 750 \{\} \;
 find . -type f -exec chmod 640 \{\} \;
 
-echo "Waiting for Elasticsearch availability"
-until curl -s --cacert config/certs/ca/ca.crt https://elasticsearch:9200 | grep -q "missing authentication credentials"
+echo "[*] Waiting for Elasticsearch availability"
+until curl -s --cacert config/certs/ca/ca.crt https://127.0.0.1:9200 | grep -q "missing authentication credentials"
   do sleep 30
 done
 
-echo "Setting kibana_system password"
-until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://elasticsearch:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"
+echo "[*] Setting the 'kibana_system' account password"
+until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://127.0.0.1:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"
   do sleep 10
 done
 
-echo "Done!"
+echo "[+] Done!"
