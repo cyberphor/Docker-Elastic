@@ -30,9 +30,9 @@ es_port: 9200
 # client_cert must be a pem file containing both cert and key for client
 use_ssl: True
 verify_certs: True
-ca_certs: /opt/elastalert/certs/ca.pem
-client_cert: /opt/elastalert/certs/elastalert.pem
-client_key: /opt/elastalert/certs/elastalert.key
+ca_certs: /opt/elastalert/config/certs/ca.crt
+client_cert: /opt/elastalert/config/certs/elastalert.crt
+client_key: /opt/elastalert/config/certs/elastalert.key
 
 # The index on es_host which is used for metadata storage
 # This can be a unmapped index, but it is recommended that you run
