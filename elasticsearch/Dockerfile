@@ -12,6 +12,7 @@ RUN sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/ca-certificat
     sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/passwd
 
 # Copy an "elasticsearch-certutil" input file
+COPY elasticsearch.yml /opt/elasticsearch/config/
 COPY instances.yml /opt/elasticsearch/config/certs/
 
 # Generate a CA certificate (needed to sign X.509 certificates)
@@ -29,10 +30,8 @@ RUN elasticsearch-certutil cert --silent --pem \
 
 # Reorganize and restrict Elasticsearch files
 RUN mv config/certs/*/* config/certs/ &&\
-    rm -r config/certs/*/ config/certs/*.zip config/certs/instances.yml &&\
-    chown -R root:root config/certs &&\
-    find . -type d -exec chmod 750 \{\} \; &&\
-    find . -type f -exec chmod 640 \{\} \;
+    rm -r config/certs/*/ config/certs/*.zip config/certs/instances.yml
 
 # Run Elasticsearch
+USER elasticsearch
 CMD [ "elasticsearch" ]

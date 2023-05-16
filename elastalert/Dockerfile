@@ -12,5 +12,4 @@ RUN python -m venv /opt/elastalert/ &&\
 COPY elastalert.yml entrypoint.sh /opt/elastalert/
 COPY rules/ /opt/elastalert/rules/
 
-# Run ElastAlert
 CMD [ "entrypoint.sh" ]

@@ -16,5 +16,8 @@ for CERT in "${CERTS[@]}"; do
 done
 
 # Create an Elasticsearch index for ElastAlert
-# RUN elastalert-create-index --config elastalert.yml
-# python -m elastalert.elastalert --config elastalert.yml
+sleep 60
+elastalert-create-index --config elastalert.yml
+
+# Run ElastAlert
+python -m elastalert.elastalert --config elastalert.yml
