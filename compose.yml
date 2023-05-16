@@ -4,14 +4,22 @@ services:
     image: elasticsearch:latest
     container_name: elasticsearch
     env_file:
-      - elasticsearch/variables.env
+      - .env
     volumes:
-      - certificates:/opt/elasticsearch/config/certs
+      - certs:/opt/elasticsearch/config/certs/
     networks: 
-    - elastic
+      elastic:
+        ipv4_address: ${ELASTICSEARCH_IP}
+    extra_hosts:
+      - elasticsearch:${ELASTICSEARCH_IP}
     ports:
-    - 9200:9200 
-  
+      - ${ELASTICSEARCH_PORT}:${ELASTICSEARCH_PORT} 
+#    healthcheck:
+#      test: ["CMD", "curl", "--cacert", "config/certs/ca.crt", "https://elasticsearch:9200"]
+#      start_period: 30s
+#      interval: 20s
+#      timeout: 10s
+#      retries: 6
   elastalert:
     depends_on: 
       - elasticsearch
@@ -19,15 +27,18 @@ services:
     image: elastalert:latest
     container_name: elastalert
     volumes:
-      - certificates:/opt/elastalert/config/certs
-    networks:
-    - elastic
-
+      - certs:/opt/elastalert/config/certs/
+    networks: 
+      elastic:
+        ipv4_address: ${ELASTALERT_IP}
+    extra_hosts:
+      - elasticsearch:${ELASTICSEARCH_IP}
 volumes:
-  certificates:
-    name: certificates
-    driver: local
-
+  certs:
+    name: certs
 networks:
   elastic:
     name: elastic
+    ipam: 
+      config: 
+        - subnet: ${SUBNET}

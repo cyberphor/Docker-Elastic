@@ -1,9 +1,9 @@
 instances:
 - name: "elasticsearch"
-  ip: 127.0.0.1
+  ip: 172.16.0.10
 - name: "logstash"
-  ip: 127.0.0.1
+  ip: 172.16.0.20
 - name: "kibana"
-  ip: 127.0.0.1
+  ip: 172.16.0.30
 - name: "elastalert"
-  ip: 127.0.0.1
+  ip: 172.16.0.40
