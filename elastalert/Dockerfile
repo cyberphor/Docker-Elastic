@@ -9,7 +9,9 @@ RUN python -m venv /opt/elastalert/ &&\
     pip install elasticsearch elastalert2 
 
 # Copy ElastAlert configuration files and rules
-COPY elastalert.yml entrypoint.sh /opt/elastalert/
+COPY entrypoint.sh /opt/elastalert/
+COPY elastalert.yml /opt/elastalert/config/
 COPY rules/ /opt/elastalert/rules/
+COPY whitelist/ /opt/elastalert/whitelist/
 
 CMD [ "entrypoint.sh" ]

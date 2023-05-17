@@ -6,8 +6,8 @@ LABEL Author="Victor Fernandez III, @cyberphor"
 USER root
 ENV PATH=/opt/elasticsearch/bin:$PATH
 WORKDIR /opt/elasticsearch/
-RUN mv /usr/share/elasticsearch/* /opt/elasticsearch/
-RUN sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/ca-certificates/update.d/docker-openjdk &&\
+RUN mv /usr/share/elasticsearch/* /opt/elasticsearch/ &&\
+    sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/ca-certificates/update.d/docker-openjdk &&\
     sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /usr/local/bin/docker-entrypoint.sh &&\
     sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/passwd
 

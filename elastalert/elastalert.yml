@@ -20,7 +20,8 @@ es_host: 172.16.0.10
 es_port: 9200
 
 # Optional URL prefix for Elasticsearch
-#es_url_prefix: elasticsearch
+index: docker
+es_url_prefix: docker
 
 # Option basic-auth username and password for Elasticsearch
 es_username: elastic

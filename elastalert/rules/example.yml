@@ -1,16 +1,11 @@
-# From example_rules/example_frequency.yaml
-es_host: elasticsearch.example.com
-es_port: 14900
-name: Example rule
-type: frequency
-index: logstash-*
-num_events: 50
-timeframe:
-    hours: 4
-filter:
-- term:
-    some_field: "some_value"
+es_host: 172.16.0.10
+es_host: 9200
+name: Unknown IP observed
+index: "docker*"
+type: whitelist
+compare_key: source_ip
+ignore_null: true
+whitelist:
+  - "!file /etc/elastalert/whitelist/ip_addresses.txt"
 alert:
-- "email"
-email:
-- "elastalert@example.com"
+  - debug

@@ -5,6 +5,15 @@ function Clear-DockerContent {
     clear
 }
 
+function Restart-WSL {
+    Get-Service LxssManager | Restart-Service
+}
+
+function Set-WSL {
+    wsl --set-default docker-desktop
+    wsl -e sysctl -w vm.max_map_count=262144 
+}
+
 function Set-VirtualMemorySize {
     bash -c "echo 'vm.max_map_count = 262144' | sudo tee /etc/sysctl.conf"
 }

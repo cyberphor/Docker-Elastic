@@ -10,21 +10,18 @@ services:
     networks: 
       elastic:
         ipv4_address: ${ELASTICSEARCH_IP}
-    extra_hosts:
-      - elasticsearch:${ELASTICSEARCH_IP}
     ports:
       - ${ELASTICSEARCH_PORT}:${ELASTICSEARCH_PORT} 
-#    healthcheck:
-#      test: [
-#        "CMD-SHELL", 
-#        "curl --cacert config/certs/ca.crt -u elastic:elastic -s -o /dev/null -w '%{http_code}' https://elasticsearch:9200/_cluster/health"
-#      ]
-#      start_period: 30s
-#      retries: 2
+    extra_hosts:
+      - "elasticsearch:${ELASTICSEARCH_IP}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --cacert config/certs/ca.crt -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD} https://${ELASTICSEARCH_IP}:9200/"]
+      start_period: 30s
+      retries: 2
   elastalert:
-#    depends_on: 
-#      elasticsearch:
-#        condition: "service_healthy"
+    depends_on: 
+      elasticsearch:
+        condition: "service_healthy"
     build: elastalert
     image: elastalert:latest
     container_name: elastalert
@@ -34,7 +31,7 @@ services:
       elastic:
         ipv4_address: ${ELASTALERT_IP}
     extra_hosts:
-      - elasticsearch:${ELASTICSEARCH_IP}
+      - "elasticsearch:${ELASTICSEARCH_IP}"
 volumes:
   certs:
     name: certs
