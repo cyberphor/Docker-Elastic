@@ -17,5 +17,5 @@ done
 
 # Create an Elasticsearch index and then run ElastAlert
 elastalert-create-index --config config/elastalert.yml &&\
-elastalert-creare-index --index docker &&\
+elastalert-create-index --config config/custom-index.yml &&\
 python -m elastalert.elastalert --config config/elastalert.yml
