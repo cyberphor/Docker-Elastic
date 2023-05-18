@@ -12,8 +12,8 @@ RUN mv /usr/share/elasticsearch/* /opt/elasticsearch/ &&\
     sed -i 's/usr\/share\/elasticsearch/opt\/elasticsearch/g' /etc/passwd
 
 # Copy an "elasticsearch-certutil" input file
-COPY elasticsearch.yml /opt/elasticsearch/config/
-COPY instances.yml /opt/elasticsearch/config/certs/
+COPY config/elasticsearch.yml /opt/elasticsearch/config/
+COPY config/instances.yml /opt/elasticsearch/config/certs/
 
 # Generate a CA certificate (needed to sign X.509 certificates)
 RUN elasticsearch-certutil ca --silent --pem \

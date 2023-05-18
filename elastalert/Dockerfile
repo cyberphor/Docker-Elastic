@@ -10,8 +10,7 @@ RUN python -m venv /opt/elastalert/ &&\
 
 # Copy ElastAlert configuration files and rules
 COPY entrypoint.sh /opt/elastalert/
-COPY elastalert.yml /opt/elastalert/config/
-COPY custom-index.yml /opt/elastalert/config/
+COPY config/elastalert.yml /opt/elastalert/config/
 COPY rules/ /opt/elastalert/rules/
 COPY whitelist/ /opt/elastalert/whitelist/
 

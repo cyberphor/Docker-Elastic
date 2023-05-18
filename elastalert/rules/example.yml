@@ -1,11 +1,9 @@
-es_host: 172.16.0.10
-es_host: 9200
 name: Unknown IP observed
-index: "docker*"
+index: "logstash-*"
 type: whitelist
 compare_key: source_ip
 ignore_null: true
 whitelist:
-  - "!file /etc/elastalert/whitelist/ip_addresses.txt"
+  - "!file whitelist/ip_addresses.txt"
 alert:
   - debug
