@@ -32,6 +32,38 @@ services:
         ipv4_address: ${ELASTALERT_IP}
     extra_hosts:
       - "elasticsearch:${ELASTICSEARCH_IP}"
+  logstash:
+    depends_on: 
+      elasticsearch:
+        condition: "service_healthy"
+    build: logstash
+    image: logstash:latest
+    container_name: logstash
+    volumes:
+      - certs:/opt/logstash/config/certs/
+    networks: 
+      elastic:
+        ipv4_address: ${LOGSTASH_IP}
+    extra_hosts:
+      - "elasticsearch:${ELASTICSEARCH_IP}"
+  kibana:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    build: kibana
+    image: kibana:latest
+    container_name: kibana
+    volumes:
+      - certs:/opt/kibana/config/certs/
+    ports:
+      - ${KIBANA_PORT}:${KIBANA_PORT}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'", ]
+    networks: 
+      elastic:
+        ipv4_address: ${KIBANA_IP}
+    extra_hosts:
+      - "elasticsearch:${ELASTICSEARCH_IP}"
 volumes:
   certs:
     name: certs
