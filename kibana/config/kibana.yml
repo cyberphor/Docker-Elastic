@@ -1,4 +1,10 @@
-server.host: "172.16.0.30"
-server.shutdownTimeout: "5s"
-elasticsearch.hosts: [ "https://elasticsearch:9200" ]
+server:
+  host: "172.16.0.30"
+  ssl:
+    enabled: true
+    key: config/kibana.key
+    certificates: config/kibana.crt
+elasticsearch:
+  hosts: [ "https://elasticsearch:9200" ]
+  ssl.certificateAuthorities: config/ca.crt
 monitoring.ui.container.elasticsearch.enabled: true
