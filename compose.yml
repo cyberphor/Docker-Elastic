@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     volumes:
-      - certs:/opt/elasticsearch/config/certs/
+      - certs:/usr/share/elasticsearch/config/certs/
     networks: 
       elastic:
         ipv4_address: ${ELASTICSEARCH_IP}
@@ -15,37 +15,9 @@ services:
     extra_hosts:
       - "elasticsearch:${ELASTICSEARCH_IP}"
     healthcheck:
-      test: ["CMD-SHELL", "curl --cacert config/certs/ca.crt -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD} https://${ELASTICSEARCH_IP}:9200/"]
+      test: ["CMD-SHELL", "curl --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD} https://${ELASTICSEARCH_IP}:${ELASTICSEARCH_PORT}/"]
       start_period: 30s
       retries: 2
-  elastalert:
-    depends_on: 
-      elasticsearch:
-        condition: "service_healthy"
-    build: elastalert
-    image: elastalert:latest
-    container_name: elastalert
-    volumes:
-      - certs:/opt/elastalert/config/certs/
-    networks: 
-      elastic:
-        ipv4_address: ${ELASTALERT_IP}
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
-  logstash:
-    depends_on: 
-      elasticsearch:
-        condition: "service_healthy"
-    build: logstash
-    image: logstash:latest
-    container_name: logstash
-    volumes:
-      - certs:/opt/logstash/config/certs/
-    networks: 
-      elastic:
-        ipv4_address: ${LOGSTASH_IP}
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
   kibana:
     depends_on:
       elasticsearch:
@@ -53,15 +25,49 @@ services:
     build: kibana
     image: kibana:latest
     container_name: kibana
+    env_file:
+      - .env
     volumes:
       - certs:/opt/kibana/config/certs/
     ports:
       - ${KIBANA_PORT}:${KIBANA_PORT}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'", ]
+      test: [ "CMD-SHELL", "curl --cacert https://${KIBANA_IP}:${KIBANA_PORT} | grep -q 'HTTP/1.1 302 Found'", ]
     networks: 
       elastic:
         ipv4_address: ${KIBANA_IP}
+    extra_hosts:
+      - "elasticsearch:${ELASTICSEARCH_IP}"
+  logstash:
+    depends_on: 
+      kibana:
+        condition: "service_healthy"
+    build: logstash
+    image: logstash:latest
+    container_name: logstash
+    env_file:
+      - .env
+    volumes:
+      - certs:/opt/logstash/config/certs/
+    networks: 
+      elastic:
+        ipv4_address: ${LOGSTASH_IP}
+    extra_hosts:
+      - "elasticsearch:${ELASTICSEARCH_IP}"
+  elastalert:
+    depends_on: 
+      logstash:
+        condition: "service_healthy"
+    build: elastalert
+    image: elastalert:latest
+    container_name: elastalert
+    env_file:
+      - .env
+    volumes:
+      - certs:/opt/elastalert/certs/
+    networks: 
+      elastic:
+        ipv4_address: ${ELASTALERT_IP}
     extra_hosts:
       - "elasticsearch:${ELASTICSEARCH_IP}"
 volumes:

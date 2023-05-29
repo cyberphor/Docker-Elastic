@@ -1,10 +1,9 @@
+# Dockerfile metadata
 FROM logstash:8.7.1
 LABEL Author="Victor Fernandez III, @cyberphor"
 
-USER root
-ENV PATH=/opt/logstash/bin:$PATH
-WORKDIR /opt/logstash/
-COPY config/logstash.yml /opt/logstash/config/
+# Copy Logstash configuration files and plugins
+COPY . .
 
+# Switch user accounts to Logstash
 USER logstash
-CMD [ "logstash" ]

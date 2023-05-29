@@ -35,6 +35,7 @@ input {
 * [https://elk-docker.readthedocs.io/](https://elk-docker.readthedocs.io/)
 * [https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target](https://www.elastic.co/guide/en/logstash/current/plugins-codecs-json.html#plugins-codecs-json-target)
 * [https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4](https://discuss.elastic.co/t/json-codec-plugin-target-option-http-input/304217/4)
+* [https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash#enable-tls-kibana](https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash#enable-tls-kibana)
 
 ### Copyright
 This project is licensed under the terms of the [MIT license](/LICENSE).

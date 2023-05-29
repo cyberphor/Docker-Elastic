@@ -2,20 +2,26 @@ function Clear-DockerContent {
     docker stop $(docker ps -aq)
     docker rm $(docker ps -aq)
     docker system prune -af; 
-    clear
+    Clear-Host
 }
 
 function Restart-WSL {
     Get-Service LxssManager | Restart-Service
 }
 
-function Set-WSL {
-    wsl --set-default docker-desktop
-    wsl -e sysctl -w vm.max_map_count=262144 
+function Set-WSLDistro {
+    Param([string]$Distro = "docker-desktop")
+    wsl --set-default $Distro
 }
 
 function Set-VirtualMemorySize {
-    bash -c "echo 'vm.max_map_count = 262144' | sudo tee /etc/sysctl.conf"
+    <#
+    .LINK
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144
+    #>
+    
+    Write-Output "wsl -d docker-desktop -u root"
+    Write-Output "sysctl -w vm.max_map_count=262144"
 }
 
 function Show-HostsFile {

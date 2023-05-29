@@ -6,5 +6,7 @@ server:
     certificates: config/kibana.crt
 elasticsearch:
   hosts: [ "https://elasticsearch:9200" ]
+  username: "elastic"
+  password: "elastic"
   ssl.certificateAuthorities: config/ca.crt
 monitoring.ui.container.elasticsearch.enabled: true
