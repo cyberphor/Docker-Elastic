@@ -19,7 +19,6 @@ function Set-VirtualMemorySize {
     .LINK
     https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144
     #>
-    
     Write-Output "wsl -d docker-desktop -u root"
     Write-Output "sysctl -w vm.max_map_count=262144"
 }
@@ -33,15 +32,13 @@ function Test-Elasticsearch {
     .LINK
     https://www.phillipsj.net/posts/windows-curl-and-self-signed-certs/
     #>
-
     $Container = "elasticsearch"
     $CaCertificate = "ca.crt"
-    $CaCertificateDirectory = "/opt/elasticsearch/config/certs/"
+    $CaCertificateDirectory = "/usr/share/elasticsearch/config/certs/"
     $CaCertificatePath = $($CaCertificateDirectory + $CaCertificate)
     $HostsFile = "$env:windir\System32\drivers\etc\hosts"
     $Username = "elastic"
     $Password = "elastic"
-
     $Credentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($Username):$($Password)"))
     $Headers = @{Authorization = "Basic $Credentials"}
     $Uri = "https://" + $Container + ":9200/_cat/health"

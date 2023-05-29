@@ -4,6 +4,3 @@ LABEL Author="Victor Fernandez III, @cyberphor"
 
 # Copy Logstash configuration files and plugins
 COPY . .
-
-# Switch user accounts to Logstash
-USER logstash

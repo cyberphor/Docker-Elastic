@@ -2,5 +2,14 @@
 FROM kibana:8.7.1
 LABEL Author="Victor Fernandez III, @cyberphor"
 
-# Switch user accounts to Kibana
-USER kibana
+# Copy Kibana configuration files
+COPY . .
+
+# Set the Kibana service account password and start Kibana
+CMD curl -X POST ${ELASTICSEARCH_HOSTS}/_security/user/$KIBANA_USERNAME/_password \
+    --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} \
+    -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}" \
+    -H "Content-Type: application/json" \
+    -d '{"password":"$KIBANA_PASSWORD}"}' \
+    -s &&\
+    /usr/local/bin/kibana-docker

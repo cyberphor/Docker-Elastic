@@ -15,7 +15,7 @@ services:
     extra_hosts:
       - "elasticsearch:${ELASTICSEARCH_IP}"
     healthcheck:
-      test: ["CMD-SHELL", "curl --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD} https://${ELASTICSEARCH_IP}:${ELASTICSEARCH_PORT}/"]
+      test: ["CMD-SHELL", "curl ${ELASTICSEARCH_HOSTS} --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"]
       start_period: 30s
       retries: 2
   kibana:
@@ -28,11 +28,11 @@ services:
     env_file:
       - .env
     volumes:
-      - certs:/opt/kibana/config/certs/
+      - certs:/usr/share/kibana/config/certs/
     ports:
       - ${KIBANA_PORT}:${KIBANA_PORT}
     healthcheck:
-      test: [ "CMD-SHELL", "curl --cacert https://${KIBANA_IP}:${KIBANA_PORT} | grep -q 'HTTP/1.1 302 Found'", ]
+      test: [ "CMD-SHELL", "curl https://${KIBANA_IP}:${KIBANA_PORT} --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD} | grep -q 'HTTP/1.1 302 Found'", ]
     networks: 
       elastic:
         ipv4_address: ${KIBANA_IP}
