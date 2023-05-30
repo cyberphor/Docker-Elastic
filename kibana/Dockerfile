@@ -10,6 +10,7 @@ CMD curl -X POST ${ELASTICSEARCH_HOSTS}/_security/user/$KIBANA_USERNAME/_passwor
     --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} \
     -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"$KIBANA_PASSWORD}"}' \
-    -s &&\
+    -d '{"password": "$KIBANA_PASSWORD"}' \
+    -s -o /dev/null &&\
+    echo "Set Kibana password to ${KIBANA_PASSWORD}" &&\
     /usr/local/bin/kibana-docker
