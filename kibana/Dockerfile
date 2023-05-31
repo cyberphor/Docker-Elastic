@@ -6,11 +6,11 @@ LABEL Author="Victor Fernandez III, @cyberphor"
 COPY . .
 
 # Set the Kibana service account password and start Kibana
-CMD curl -X POST ${ELASTICSEARCH_HOSTS}/_security/user/$KIBANA_USERNAME/_password \
-    --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} \
-    -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}" \
+CMD curl -X POST https://172.16.0.10:9200/_security/user/kibana_system/_password \
+    --cacert config/certs/ca.crt \
+    -u "elastic:elasticsearch" \
     -H "Content-Type: application/json" \
-    -d '{"password": "$KIBANA_PASSWORD"}' \
-    -s -o /dev/null &&\
-    echo "Set Kibana password to ${KIBANA_PASSWORD}" &&\
+    -d '{"password": "kibana"}' \
+    -s &&\
+    echo "Set Kibana password to 'kibana'" &&\
     /usr/local/bin/kibana-docker

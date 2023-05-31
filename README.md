@@ -6,7 +6,7 @@ Dockerfiles for Elasticsearch, Kibana, Logstash, and ElastAlert.
 git clone https://github.com/cyberphor/docker-elastic
 cd docker-elastic
 docker-compose build
-docker-compose up
+docker-compose up -d
 ```
 
 ### Copyright

@@ -1,14 +1,16 @@
-# Kibana
-server:
-  host: "172.16.0.30"
-  ssl:
-    enabled: true
-    certificate: config/certs/kibana.crt
-    key: config/certs/kibana.key
+# Reference
+# https://www.elastic.co/guide/en/kibana/current/settings.html
 
-# Elasticsearch
+# Kibana-specific settings
+server:
+  host: "0.0.0.0"
+
+# Kibana-to-Elasticsearch communication
 elasticsearch:
   hosts: [ "https://elasticsearch:9200" ]
+  ssl:
+    certificateAuthorities: config/ca.crt
+    certificate: config/certs/kibana.crt
+    key: config/certs/kibana.key
   username: "kibana_system"
-  password: "elastic"
-  ssl.certificateAuthorities: config/ca.crt
+  password: "kibana"
