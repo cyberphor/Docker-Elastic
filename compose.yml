@@ -9,8 +9,6 @@ services:
       - certs:/usr/share/elasticsearch/config/certs/
     ports:
       - ${ELASTICSEARCH_PORT}:${ELASTICSEARCH_PORT} 
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
     healthcheck:
       test: ["CMD-SHELL", "curl ${ELASTICSEARCH_HOSTS} --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"]
       start_period: 30s
@@ -31,9 +29,7 @@ services:
     healthcheck:
       # current healthcheck until HTTPS is enabled/enforced when accessing Kibana
       # TODO: address accepting "self-signed" certificate notification when accessing HTTPS-enabled Kibana
-      test: [ "CMD-SHELL", "curl http://${KIBANA_IP}:${KIBANA_PORT} -I -s | grep -q 'HTTP/1.1 302 Found'", ]
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
+      test: [ "CMD-SHELL", "curl http://localhost:${KIBANA_PORT} -I -s | grep -q 'HTTP/1.1 302 Found'", ]
   logstash:
     depends_on: 
       kibana:
@@ -45,11 +41,6 @@ services:
       - .env
     volumes:
       - certs:/opt/logstash/config/certs/
-    networks: 
-      elastic:
-        ipv4_address: ${LOGSTASH_IP}
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
   elastalert:
     depends_on: 
       logstash:
@@ -61,11 +52,6 @@ services:
       - .env
     volumes:
       - certs:/opt/elastalert/certs/
-    networks: 
-      elastic:
-        ipv4_address: ${ELASTALERT_IP}
-    extra_hosts:
-      - "elasticsearch:${ELASTICSEARCH_IP}"
 volumes:
   certs:
     name: certs

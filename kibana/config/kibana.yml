@@ -7,7 +7,7 @@ server:
 
 # Kibana-to-Elasticsearch communication
 elasticsearch:
-  hosts: [ "https://elasticsearch:9200" ]
+  hosts: [ "https://localhost:9200" ]
   ssl:
     certificateAuthorities: config/ca.crt
     certificate: config/certs/kibana.crt
