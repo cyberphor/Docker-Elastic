@@ -1,8 +1,8 @@
 cluster.name: ${CLUSTER_NAME}
-node.name: "${NODE_NAME}"
-http.port: "${PORT}"
+node.name: ${NODE_NAME}
+http.port: ${PORT}
 xpack:
-  license.self_generated.type: "${LICENSE}"
+  license.self_generated.type: ${LICENSE}
   security:
     enabled: true
     authc:
@@ -10,5 +10,5 @@ xpack:
         order: 0
         type: basic
         credentials:
-          username: "${USERNAME}"
-          password: "${PASSWORD}"
+          username: ${USERNAME}
+          password: ${PASSWORD}
