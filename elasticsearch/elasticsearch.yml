@@ -1,0 +1,14 @@
+cluster.name: ${CLUSTER_NAME}
+node.name: "${NODE_NAME}"
+http.port: "${PORT}"
+xpack:
+  license.self_generated.type: "${LICENSE}"
+  security:
+    enabled: true
+    authc:
+      basic_internal_auth_domain:
+        order: 0
+        type: basic
+        credentials:
+          username: "${USERNAME}"
+          password: "${PASSWORD}"
