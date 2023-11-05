@@ -11,7 +11,7 @@ docker build -t local/elasticsearch:latest -f Dockerfile  .
 **Step 2.** Create a container using the image. 
 ```bash
 # -n: name
-docker create -t local/elasticsearch:latest -n elasticsearch 
+docker create -t local/elasticsearch:latest -n elasticsearch -m 1GB -p 9200:9200 --env-file .env 
 ```
 
 **Step 3.** Run the container.
@@ -20,7 +20,7 @@ docker create -t local/elasticsearch:latest -n elasticsearch
 # -p: expose ports mentioned in Dockerfile
 # --env-file: path to file where environment variables are defined
 # -d: daemon mode
-docker run -m 1GB -p 9200:9200 local/elasticsearch:latest
+docker run  -m 1GB local/elasticsearch:latest
 ```
 
 **Step 4.** Stop the container. 
