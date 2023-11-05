@@ -5,22 +5,22 @@
 # -t: tag (e.g., registry/app:version)
 # -f: path to Dockerfile
 # .: use the current working directory as the build context (i.e., build from here)
-docker build -f Dockerfile -t local/elasticsearch:latest  . 
+docker build -t local/elasticsearch:latest -f Dockerfile  . 
 ```
 
 **Step 2.** Create a container using the image. 
 ```bash
 # -n: name
-# -m: memory size
-# -P: expose ports mentioned in Dockerfile
-docker create --name elasticsearch -m 1GB -d -P -t local/elasticsearch:latest
+docker create -t local/elasticsearch:latest -n elasticsearch 
 ```
 
 **Step 3.** Run the container.
 ```bash
+# -m: memory size
+# -p: expose ports mentioned in Dockerfile
 # --env-file: path to file where environment variables are defined
 # -d: daemon mode
-docker run --env-file .env -d local/elasticsearch:latest
+docker run -m 1GB -p 9200:9200 local/elasticsearch:latest
 ```
 
 **Step 4.** Stop the container. 
