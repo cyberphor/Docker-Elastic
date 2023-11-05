@@ -2,38 +2,42 @@
 
 **Step 1.** Build an image of Elasticsearch.
 ```bash
-# -t: tag (e.g., registry/app:version)
+# -t: tag the image (e.g., registry/app:version)
 # -f: path to Dockerfile
 # .: use the current working directory as the build context (i.e., build from here)
-docker build -t local/elasticsearch:latest -f Dockerfile  . 
+docker image build -t local/elasticsearch:latest -f Dockerfile  . 
 ```
 
 **Step 2.** Create a container using the image. 
 ```bash
-# -n: name
-docker create -t local/elasticsearch:latest -n elasticsearch -m 1GB -p 9200:9200 --env-file .env 
-```
-
-**Step 3.** Run the container.
-```bash
-# -m: memory size
-# -p: expose ports mentioned in Dockerfile
+# --name: container name (to reference when starting and stopping it) 
+# -m: memory to allocate to the container
+# -p: ports to expose (host:container)
 # --env-file: path to file where environment variables are defined
-# -d: daemon mode
-docker run  -m 1GB local/elasticsearch:latest
+docker container create --name elasticsearch -m 1GB -p 9200:9200 --env-file .env local/elasticsearch:latest
 ```
 
-**Step 4.** Stop the container. 
+**Step 3** Inspect the container and verify it was configured correctly. 
 ```bash
-docker stop elasticsearch
+docker container inspect elasticsearch
 ```
 
-**Step 3.** Remove the container. 
+**Step 4.** Start the container in the background.
 ```bash
-docker rm elasticsearch
+docker container start elasticsearch
 ```
 
-**Step 4.** Remove the image. 
+**Step 5.** Stop the container. 
 ```bash
-docker rmi local/elasticsearch:latest
+docker container stop elasticsearch
+```
+
+**Step 6.** Remove the container. 
+```bash
+docker container rm elasticsearch
+```
+
+**Step 7.** Remove the image. 
+```bash
+docker image rm local/elasticsearch:latest
 ```
