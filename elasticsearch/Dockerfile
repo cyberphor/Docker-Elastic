@@ -1,15 +1,15 @@
 # Dockerfile metadata
-FROM elasticsearch:8.10.1
-LABEL author="Victor Fernandez III, @cyberphor"
+FROM elasticsearch:8.7.1
+LABEL Author="Victor Fernandez III, @cyberphor"
 
 # Copy Elasticsearch configuration files
-COPY config/ config/
+COPY . .
 
 # Generate a CA certificate (needed to sign X.509 certificates)
 USER root
 RUN elasticsearch-certutil ca --silent --pem \
-  --out config/certs/ca.zip &&\
-  unzip config/certs/ca.zip -d config/certs 
+    --out config/certs/ca.zip &&\
+    unzip config/certs/ca.zip -d config/certs 
 
 # Generate X.509 certificates for mutual authentication between Elasticsearch, Kibana, Logstash, and Elastalert
 RUN elasticsearch-certutil cert --silent --pem \

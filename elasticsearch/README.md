@@ -8,13 +8,23 @@
 docker image build -t local/elasticsearch:latest -f Dockerfile  . 
 ```
 
-**Step 2.** Create a container using the image. 
+**Step 2.** Create a volume for the container.
+```bash
+docker volume create certs
+```
+
+**Step 3.** Create a network.
+```bash
+docker network create elastic
+```
+
+**Step 2.** Create the container using the image. 
 ```bash
 # --name: container name (to reference when starting and stopping it) 
 # -m: memory to allocate to the container
 # -p: ports to expose (host:container)
 # --env-file: path to file where environment variables are defined
-docker container create --name elasticsearch -m 1GB -p 9200:9200 --env-file .env local/elasticsearch:latest
+docker container create --name elasticsearch --env-file .env -v certs:/usr/share/elasticsearch/config/certs/ -p 9200:9200 --network elastic local/elasticsearch:latest
 ```
 
 **Step 3** Inspect the container and verify it was configured correctly. 
@@ -40,4 +50,9 @@ docker container rm elasticsearch
 **Step 7.** Remove the image. 
 ```bash
 docker image rm local/elasticsearch:latest
+```
+
+**Step 8.** Remove the volume.
+```bash
+# text goes here
 ```
