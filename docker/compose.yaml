@@ -1,42 +1,38 @@
 services:
   elasticsearch:
-    build: elasticsearch/
-    image: elasticsearch:latest
+    build: elasticsearch
+    image: docker-elastic/elasticsearch:v1.0.0
     container_name: elasticsearch
     env_file:
-      - elasticsearch/.env
+      - .env
     volumes:
       - certs:/usr/share/elasticsearch/config/certs/
     networks:
       - elastic
     ports:
       - 9200:9200
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'" ]
-      interval: 10s
-      timeout: 10s
-      retries: 120
-  #  healthcheck:
-  #    test: ["CMD-SHELL", "curl ${ELASTICSEARCH_HOSTS} --cacert ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES} -u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"]
-  #    start_period: 30s
-  #    retries: 2
-  #kibana:
-  #  depends_on:
-  #    elasticsearch:
-  #      condition: service_healthy
-  #  build: kibana
-  #  image: kibana:latest
-  #  container_name: kibana
-  #  env_file:
-  #    - .env
-  #  volumes:
-  #    - certs:/usr/share/kibana/config/certs/
-  #  ports:
-  #    - ${KIBANA_PORT}:${KIBANA_PORT}
-  #  healthcheck:
-  #    # current healthcheck until HTTPS is enabled/enforced when accessing Kibana
-  #    # TODO: address accepting "self-signed" certificate notification when accessing HTTPS-enabled Kibana
-  #    test: [ "CMD-SHELL", "curl http://localhost:${KIBANA_PORT} -I -s | grep -q 'HTTP/1.1 302 Found'", ]
+    #healthcheck:
+    #  test: [ "CMD-SHELL", "test -f config/certs/ca.crt" ]
+    #  interval: 10s
+    #  timeout: 10s
+    #  retries: 3
+  kibana:
+    #depends_on:
+    #  elasticsearch:
+    #    condition: service_healthy
+    build: kibana
+    image: docker-elastic/kibana:v1.0.0
+    container_name: kibana
+    env_file:
+      - .env
+    volumes:
+      - certs:/usr/share/kibana/config/certs/
+    ports:
+      - 5601:5601
+    #healthcheck:
+      # current healthcheck until HTTPS is enabled/enforced when accessing Kibana
+      # TODO: address accepting "self-signed" certificate notification when accessing HTTPS-enabled Kibana
+    #  test: [ "CMD-SHELL", "curl http://localhost:${KIBANA_PORT} -I -s | grep -q 'HTTP/1.1 302 Found'", ]
   #logstash:
   #  depends_on: 
   #    kibana:

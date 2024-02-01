@@ -1,5 +1,5 @@
 # Dockerfile metadata
-FROM elasticsearch:8.7.1
+FROM elasticsearch:8.11.2
 LABEL Author="Victor Fernandez III, @cyberphor"
 
 # Copy Elasticsearch configuration files
@@ -16,7 +16,7 @@ RUN elasticsearch-certutil cert --silent --pem \
     --in config/certs/instances.yml \
     --ca-cert config/certs/ca/ca.crt \
     --ca-key config/certs/ca/ca.key \
-    --out config/certs/elastic.zip &&\ 
+    --out config/certs/elastic.zip &&\
     unzip config/certs/elastic.zip -d config/certs 
 
 # Reorganize and restrict Elasticsearch files

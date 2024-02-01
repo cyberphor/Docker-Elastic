@@ -4,10 +4,10 @@ This file documents some of the issues I have encountered and resolved while dep
 ## vm.max_map_count is too low
 > max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
 
-If you are getting the error above on a Windows-based computer, you can either (1) run the provided script or (2) invoke the Windows Subsystem for Linux (WSL), append `vm.max_map_count = 262144` to `/etc/sysctl.conf` and reload the WSL's kernel parameters. `sysctl` is a utility used for configuring kernel parameters at runtime. `sysctl -p` forces the kernel to reload parameters such as those saved in `/etc/sysctl.conf`. All of this is necessary when the WSL is used to run containers. By default, WSL-based containers are limited in the amount of memory they are allowed to use.  
+If you are getting the error above on a Windows-based computer, invoke the Windows Subsystem for Linux (WSL), append `vm.max_map_count = 262144` to `/etc/sysctl.conf` and reload the WSL's kernel parameters. `sysctl` is a utility used for configuring kernel parameters at runtime. `sysctl -p` forces the kernel to reload parameters such as those saved in `/etc/sysctl.conf`. All of this is necessary when the WSL is used to run containers. By default, WSL-based containers are limited in the amount of memory they are allowed to use.  
 ```bash
-Import-Module Elastic.psm1
-Set-VirtualMemorySize
+wsl -d docker-desktop
+sysctl -w vm.max_map_count=262144
 ```
 
 ## "target" option was not specified 

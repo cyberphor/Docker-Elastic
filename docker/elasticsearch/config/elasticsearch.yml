@@ -4,7 +4,7 @@ xpack:
   license.self_generated.type: "basic"
   security:
     enabled: true 
-    http.ssl: # Encrypt HTTP-based API connections from Kibana, Logstash, Elastalert
+    http.ssl: # Encrypt HTTP-based API connections from Kibana, Logstash, etc.
       enabled: true
       key: certs/elasticsearch.key
       certificate: certs/elasticsearch.crt
