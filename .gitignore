@@ -1,4 +1,2 @@
-*.crt
-*.key
 terraform/*terraform.
 terraform/.terraform*

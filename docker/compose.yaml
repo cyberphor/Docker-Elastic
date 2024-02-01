@@ -11,15 +11,7 @@ services:
       - elastic
     ports:
       - 9200:9200
-    #healthcheck:
-    #  test: [ "CMD-SHELL", "test -f config/certs/ca.crt" ]
-    #  interval: 10s
-    #  timeout: 10s
-    #  retries: 3
   kibana:
-    #depends_on:
-    #  elasticsearch:
-    #    condition: service_healthy
     build: kibana
     image: docker-elastic/kibana:v1.0.0
     container_name: kibana
@@ -29,32 +21,17 @@ services:
       - certs:/usr/share/kibana/config/certs/
     ports:
       - 5601:5601
-    #healthcheck:
-      # current healthcheck until HTTPS is enabled/enforced when accessing Kibana
-      # TODO: address accepting "self-signed" certificate notification when accessing HTTPS-enabled Kibana
-    #  test: [ "CMD-SHELL", "curl http://localhost:${KIBANA_PORT} -I -s | grep -q 'HTTP/1.1 302 Found'", ]
-  #logstash:
-  #  depends_on: 
-  #    kibana:
-  #      condition: "service_healthy"
-  #  build: logstash
-  #  image: logstash:latest
-  #  container_name: logstash
-  #  env_file:
-  #    - .env
-  #  volumes:
-  #    - certs:/opt/logstash/config/certs/
-  #elastalert:
-  #  depends_on: 
-  #    logstash:
-  #      condition: "service_healthy"
-  #  build: elastalert
-  #  image: elastalert:latest
-  #  container_name: elastalert
-  #  env_file:
-  #    - .env
-  #  volumes:
-  #    - certs:/opt/elastalert/certs/
+  logstash:
+    build: logstash
+    image: docker-elastic/logstash:v1.0.0
+    container_name: logstash
+    env_file:
+      - .env
+    volumes:
+      - certs:/usr/share/logstash/config/certs/
+    ports:
+      - 5044:5044
+      - 9600:9600
 volumes:
   certs:
     name: certs

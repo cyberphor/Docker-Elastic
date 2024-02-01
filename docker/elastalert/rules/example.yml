@@ -1,9 +1,0 @@
-name: Unknown IP observed
-index: "logstash-*"
-type: whitelist
-compare_key: source_ip
-ignore_null: true
-whitelist:
-  - "!file whitelist/ip_addresses.txt"
-alert:
-  - debug
