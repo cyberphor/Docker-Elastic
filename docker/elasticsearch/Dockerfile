@@ -3,8 +3,7 @@ FROM elasticsearch:8.11.2
 LABEL Author="Victor Fernandez III, @cyberphor"
 
 # Copy Elasticsearch configuration files
-COPY elasticsearch.yml config/elasticsearch.yml
-COPY instances.yml config/certs/instances.yml
+COPY config config
 
 # Generate a CA certificate (needed to sign X.509 certificates)
 USER root

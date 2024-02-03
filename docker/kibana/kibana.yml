@@ -1,8 +1,0 @@
-server:                                         # Kibana-specific settings
-  host: "0.0.0.0"                               # make Kibana listen on all IPs (public and private)
-elasticsearch:                                  # Kibana-to-Elasticsearch communication
-  hosts: [ "https://elasticsearch:9200" ]
-  ssl:
-    certificateAuthorities: config/certs/ca.crt
-    certificate: config/certs/kibana.crt
-    key: config/certs/kibana.key
