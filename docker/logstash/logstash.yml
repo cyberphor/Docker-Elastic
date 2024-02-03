@@ -1,2 +1,5 @@
-http.host: "0.0.0.0"
-monitoring.elasticsearch.hosts: https://localhost:9200
+http:
+  host: "0.0.0.0"
+monitoring:
+  elasticsearch:
+    hosts: https://elasticsearch:9200

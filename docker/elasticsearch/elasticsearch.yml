@@ -1,7 +1,13 @@
-cluster.name: "cluster_01"
-node.name: "node_01"
+cluster:
+  name: "cluster_01"
+node:
+  name: "node_01"
+discovery:
+  type: single-node
 xpack:
-  license.self_generated.type: "basic"
+  license:
+    self_generated:
+      type: "basic"
   security:
     enabled: true 
     http.ssl:                               # Encrypt HTTP-based API connections from Kibana, Logstash, etc.
@@ -9,6 +15,7 @@ xpack:
       key: certs/elasticsearch.key
       certificate: certs/elasticsearch.crt
       certificate_authorities: certs/ca.crt
+      verification_mode: certificate
     transport.ssl:                          # Encrypt communication between Elasticsearch nodes
       enabled: true
       key: certs/elasticsearch.key

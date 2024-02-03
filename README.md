@@ -1,4 +1,4 @@
-## Docker Elastic
+## Elastic
 Docker and Terraform files for deploying a containerized Elastic stack in Azure.
 
 ### Getting Started

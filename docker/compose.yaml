@@ -37,3 +37,4 @@ volumes:
     name: certs
 networks:
   elastic:
+    name: elastic
