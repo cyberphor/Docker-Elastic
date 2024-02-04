@@ -1,5 +1,4 @@
 instances:
 - name: "elasticsearch"
-- name: "kibana"
 - name: "logstash"
-- name: "elastalert"
+- name: "kibana"

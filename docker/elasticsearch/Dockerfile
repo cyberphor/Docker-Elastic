@@ -1,15 +1,17 @@
 # Dockerfile metadata
-FROM elasticsearch:8.11.2
+FROM elasticsearch:8.12.0
 LABEL Author="Victor Fernandez III, @cyberphor"
 
 # Copy Elasticsearch configuration files
-COPY config config
+COPY instances.yml config/certs/instances.yml
 
 # Generate a CA certificate (needed to sign X.509 certificates)
 USER root
 RUN elasticsearch-certutil ca --silent --pem \
     --out config/certs/ca.zip &&\
-    unzip config/certs/ca.zip -d config/certs 
+    unzip config/certs/ca.zip -d config/certs &&\
+    ls -al &&\
+    sleep 10
 
 # Generate X.509 certificates for mutual authentication between Elasticsearch, Kibana, Logstash, and Elastalert
 RUN elasticsearch-certutil cert --silent --pem \
@@ -21,7 +23,7 @@ RUN elasticsearch-certutil cert --silent --pem \
 
 # Reorganize and restrict Elasticsearch files
 RUN mv config/certs/*/* config/certs/ &&\
-    rm -r config/certs/instances.yml config/certs/*/ config/certs/*.zip &&\
+    rm -r config/certs/*/ config/certs/*.zip &&\
     chmod g+w config/ 
 
 # Switch user accounts back to Elasticsearch

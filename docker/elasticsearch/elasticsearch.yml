@@ -1,5 +1,11 @@
-cluster.name: "cluster_01"
-node.name: "node_01"
+cluster:
+  name: "cluster_01"
+node:
+  name: "node_01"
+discovery:
+  type: single-node
+network:
+  host: 0.0.0.0
 xpack:
   license.self_generated.type: "basic"
   security:

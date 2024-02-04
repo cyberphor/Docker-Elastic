@@ -1,0 +1,8 @@
+server:
+  host: "0.0.0.0"
+elasticsearch:
+  hosts: [ "https://elasticsearch:9200" ]
+  ssl:
+    certificateAuthorities: config/certs/ca.crt
+    certificate: config/certs/kibana.crt
+    key: config/certs/kibana.key

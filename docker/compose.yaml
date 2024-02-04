@@ -6,11 +6,12 @@ services:
     env_file:
       - .env
     volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - certs:/usr/share/elasticsearch/config/certs/
-    networks:
-      - elastic
     ports:
       - 9200:9200
+    networks:
+      - elastic
   kibana:
     build: kibana
     image: docker-elastic/kibana:v1.0.0
@@ -18,22 +19,27 @@ services:
     env_file:
       - .env
     volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
       - certs:/usr/share/kibana/config/certs/
     ports:
       - 5601:5601
-  logstash:
-    build: logstash
-    image: docker-elastic/logstash:v1.0.0
-    container_name: logstash
-    env_file:
-      - .env
-    volumes:
-      - certs:/usr/share/logstash/config/certs/
-    ports:
-      - 5044:5044
-      - 9600:9600
+    networks:
+      - elastic
+  #logstash:
+  #  build: logstash
+  #  image: docker-elastic/logstash:v1.0.0
+  #  container_name: logstash
+  #  env_file:
+  #    - .env
+  #  volumes:
+  #    - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+  #    - certs:/usr/share/logstash/config/certs/
+  #  ports:
+  #    - 5044:5044
+  #    - 9600:9600
 volumes:
   certs:
     name: certs
 networks:
   elastic:
+    name: elastic
