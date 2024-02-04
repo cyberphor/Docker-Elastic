@@ -1,0 +1,5 @@
+http:
+  host: localhost
+monitoring:
+  elasticsearch:
+    hosts: https://elasticsearch:9200

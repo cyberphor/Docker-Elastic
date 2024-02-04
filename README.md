@@ -1,5 +1,5 @@
-## Docker Elastic
-Dockerfiles for Elasticsearch, Kibana, Logstash, and ElastAlert. 
+## Elastic
+Docker and Terraform files for deploying a containerized Elastic stack in Azure.
 
 ### Getting Started
 ```bash

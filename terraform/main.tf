@@ -30,30 +30,22 @@ resource "azurerm_container_registry" "main" {
   admin_enabled       = true
 }
 
-# resource "azuread_application" "container_registry"
-resource "azuread_application" "main" {
-# display_name = "-container-registry-sp"
-  display_name = var.image
+resource "azuread_application" "container_registry" {
+  display_name = "${azurerm_resource_group.main.name}-container-registry-sp"
 }
 
-# resource "azuread_service_principal" "container_registry"
-resource "azuread_service_principal" "main" {
-  # application_id = azuread_application.container_registry.application_id
-  application_id = azuread_application.main.application_id
+resource "azuread_service_principal" "container_registry" {
+  application_id = azuread_application.container_registry.application_id
 }
 
-# resource "azuread_service_principal_password" "container_registry"
-resource "azuread_service_principal_password" "main" {
-  # service_principal_id = azuread_service_principal.container_registry.object_id
-  service_principal_id = azuread_service_principal.main.object_id
+resource "azuread_service_principal_password" "container_registry" {
+  service_principal_id = azuread_service_principal.container_registry.object_id
 }
 
-# resource "azurerm_role_assignment" "container_registry"
-resource "azurerm_role_assignment" "main" {
+resource "azurerm_role_assignment" "container_registry" {
   scope                = azurerm_container_registry.main.id
   role_definition_name = "AcrPush"
-  # principal_id         = azuread_service_principal.container_registry.object_id
-  principal_id         = azuread_service_principal.main.object_id
+  principal_id         = azuread_service_principal.container_registry.object_id
   principal_type       = "ServicePrincipal"
 }
 
@@ -70,7 +62,7 @@ resource "terraform_data" "docker" {
   }
   provisioner "local-exec" {
     # login to the Azure Container Registry
-    command = "az acr login -n ${azurerm_container_registry.main.name} -u ${azuread_service_principal.main.application_id} -p ${azuread_service_principal_password.main.value}"
+    command = "az acr login -n ${azurerm_container_registry.main.name} -u ${azuread_service_principal.container_registry.application_id} -p ${azuread_service_principal_password.container_registry.value}"
   }
   provisioner "local-exec" {
     # push the image to the Azure Container Registry
@@ -104,10 +96,8 @@ resource "azurerm_container_group" "main" {
   }
   image_registry_credential {
     server = "${azurerm_container_registry.main.name}.azurecr.io"
-    # username = azuread_service_principal.container_registry.application_id
-    username = azuread_service_principal.main.application_id
-    # password = azuread_service_principal_password.container_registry.value
-    password = azuread_service_principal_password.main.value
+    username = azuread_service_principal.container_registry.application_id
+    password = azuread_service_principal_password.container_registry.value
   }
   os_type             = "Linux"
   dns_name_label      = random_pet.value.id

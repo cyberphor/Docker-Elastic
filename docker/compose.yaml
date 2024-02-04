@@ -25,6 +25,7 @@ services:
       - 5601:5601
     networks:
       - elastic
+<<<<<<< HEAD
   #logstash:
   #  build: logstash
   #  image: docker-elastic/logstash:v1.0.0
@@ -37,6 +38,21 @@ services:
   #  ports:
   #    - 5044:5044
   #    - 9600:9600
+=======
+  logstash:
+    build: logstash
+    image: docker-elastic/logstash:v1.0.0
+    container_name: logstash
+    env_file:
+      - .env
+    volumes:
+      - certs:/usr/share/logstash/config/certs/
+    ports:
+      - 5044:5044
+      - 9600:9600
+    networks:
+      - elastic
+>>>>>>> be9db9b4a808fa6b195b5e3d7bce80f7e2d94220
 volumes:
   certs:
     name: certs
