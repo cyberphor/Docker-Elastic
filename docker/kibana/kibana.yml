@@ -6,3 +6,4 @@ elasticsearch:
     certificateAuthorities: config/certs/ca.crt
     certificate: config/certs/kibana.crt
     key: config/certs/kibana.key
+    verificationMode: certificate

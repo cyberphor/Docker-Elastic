@@ -9,9 +9,7 @@ COPY instances.yml config/certs/instances.yml
 USER root
 RUN elasticsearch-certutil ca --silent --pem \
     --out config/certs/ca.zip &&\
-    unzip config/certs/ca.zip -d config/certs &&\
-    ls -al &&\
-    sleep 10
+    unzip config/certs/ca.zip -d config/certs 
 
 # Generate X.509 certificates for mutual authentication between Elasticsearch, Kibana, Logstash, and Elastalert
 RUN elasticsearch-certutil cert --silent --pem \
